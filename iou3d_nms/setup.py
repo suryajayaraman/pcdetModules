@@ -1,32 +1,19 @@
-import os
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 
-def make_cuda_ext(name, module, sources):
-    cuda_ext = CUDAExtension(
-        name='%s.%s' % (module, name),
-        sources=[os.path.join(*module.split('.'), src) for src in sources]
-    )
-    return cuda_ext
-
-
-
 if __name__ == '__main__':
     setup(
-        name='pcdetModules',
-        ext_modules=[
-                CUDAExtension(name= 'iou3d_nms_cuda',        
-                sources=[
-                    'src/iou3d_cpu.cpp',
-                    'src/iou3d_nms_api.cpp',
-                    'src/iou3d_nms.cpp',
-                    'src/iou3d_nms_kernel.cu',
-                ]
-            )
-        ],
-        cmdclass={'build_ext': BuildExtension}
-    )
+        name='iou3d_nms_cuda',
+        ext_modules=[CUDAExtension('iou3d_nms_cuda', 
+                [
+                    'iou3d_cpu.cpp',
+                    'iou3d_nms_api.cpp',
+                    'iou3d_nms.cpp',
+                    'iou3d_nms_kernel.cu',    
+                ])],
+        cmdclass={'build_ext': BuildExtension})
+
 
     #     name='pcdetModules',
     #     description='Modules commonly used for Lidar Point Cloud based 3D object detection',
