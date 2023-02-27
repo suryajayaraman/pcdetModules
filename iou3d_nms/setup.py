@@ -16,9 +16,7 @@ if __name__ == '__main__':
     setup(
         name='pcdetModules',
         ext_modules=[
-           make_cuda_ext(
-                name='iou3d_nms_cuda',
-                module='iou3d_nms',
+                CUDAExtension(name= 'iou3d_nms_cuda',        
                 sources=[
                     'src/iou3d_cpu.cpp',
                     'src/iou3d_nms_api.cpp',
